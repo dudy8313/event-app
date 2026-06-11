@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Admin Panel — Event Commitments</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#d4af37;--gold-light:#f4d77a;--bg:#0a0a0a;--bg2:#161616;--line:rgba(212,175,55,0.2);--green:#4ade80;--red:#f87171}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#eee;min-height:100vh}
+
+  .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+  .login-card{background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:40px;width:100%;max-width:400px;text-align:center}
+  .login-card h1{font-size:22px;margin-bottom:6px;color:var(--gold-light)}
+  .login-card p{color:#888;font-size:13px;margin-bottom:24px}
+  .login-card input{width:100%;padding:12px 14px;background:#0a0a0a;border:1px solid var(--line);border-radius:8px;color:#fff;font-size:15px;margin-bottom:14px}
+  .login-card button{width:100%;padding:12px;background:var(--gold);color:#000;border:none;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer}
+  .login-card .err{color:var(--red);font-size:13px;margin-top:10px;min-height:18px}
+
+  .topbar{background:var(--bg2);border-bottom:1px solid var(--line);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:14px}
+  .topbar h1{font-size:18px;color:var(--gold-light);font-weight:600}
+  .topbar .stats{display:flex;gap:18px;font-size:12px;flex-wrap:wrap}
+  .topbar .stats span{color:#888}
+  .topbar .stats b{color:var(--gold-light)}
+  .topbar .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{padding:8px 14px;border-radius:7px;border:1px solid var(--line);background:transparent;color:#eee;font-size:13px;cursor:pointer;font-family:inherit}
+  .btn:hover{background:rgba(212,175,55,0.1)}
+  .btn.danger{color:var(--red);border-color:rgba(248,113,113,0.3)}
+  .btn.danger:hover{background:rgba(248,113,113,0.1)}
+  .btn.primary{background:var(--gold);color:#000;border-color:var(--gold);font-weight:600}
+  .btn.primary:hover{background:var(--gold-light)}
+
+  .container{max-width:1500px;margin:0 auto;padding:24px;display:grid;grid-template-columns:1fr 380px;gap:24px}
+  @media (max-width:1100px){.container{grid-template-columns:1fr}}
+
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:20px}
+  .card h2{font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+
+  .search-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+  .search-row input{flex:1;min-width:200px;padding:10px 12px;background:#0a0a0a;border:1px solid var(--line);border-radius:7px;color:#fff;font-size:14px}
+  .filter-tabs{display:flex;gap:6px}
+  .ftab{padding:8px 12px;font-size:12px;border:1px solid var(--line);border-radius:7px;background:transparent;color:#aaa;cursor:pointer}
+  .ftab.active{background:var(--gold);color:#000;border-color:var(--gold);font-weight:600}
+
+  .members{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;max-height:calc(100vh - 280px);overflow-y:auto;padding-right:6px}
+  .members::-webkit-scrollbar{width:8px}
+  .members::-webkit-scrollbar-thumb{background:#333;border-radius:4px}
+  .member{background:#0e0e0e;border:1px solid rgba(255,255,255,0.05);border-radius:9px;padding:14px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s}
+  .member.committed{border-color:rgba(74,222,128,0.4);background:rgba(74,222,128,0.04)}
+  .member-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .member-name{font-size:14px;font-weight:500;flex:1;cursor:pointer;outline:none;padding:2px 4px;border-radius:4px}
+  .member-name:hover,.member-name:focus{background:rgba(212,175,55,0.08)}
+  .member-id{font-size:11px;color:#666;font-variant-numeric:tabular-nums}
+
+  .input-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .input-field{display:flex;flex-direction:column;gap:4px}
+  .input-field label{font-size:10px;color:#888;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+  .input-field input{padding:8px 10px;background:#000;border:1px solid var(--line);border-radius:6px;color:#fff;font-size:13px;font-variant-numeric:tabular-nums;width:100%}
+  .submit-row{display:flex;gap:6px;align-items:center}
+  .submit-row .total{flex:1;font-size:11px;color:#888;letter-spacing:1px}
+  .submit-row .total b{color:var(--gold-light);font-weight:700;font-variant-numeric:tabular-nums}
+  .submit-row button{padding:9px 14px;background:var(--gold);color:#000;border:none;border-radius:6px;font-weight:600;font-size:12px;cursor:pointer}
+  .submit-row button:hover{background:var(--gold-light)}
+
+  .committed-tag{display:flex;flex-direction:column;gap:6px;font-size:13px}
+  .committed-tag .row{display:flex;justify-content:space-between;align-items:center}
+  .committed-tag .row .lbl{color:#888;font-size:11px;letter-spacing:1px;text-transform:uppercase}
+  .committed-tag .row .v{color:var(--green);font-weight:700;font-variant-numeric:tabular-nums}
+  .committed-tag .total-row{border-top:1px solid rgba(74,222,128,0.2);padding-top:6px;margin-top:2px}
+  .committed-tag .total-row .v{color:var(--gold-light)}
+  .committed-tag .reset{font-size:11px;color:#888;cursor:pointer;background:none;border:none;text-decoration:underline;align-self:flex-end;padding:0;margin-top:4px}
+
+  .sidebar{display:flex;flex-direction:column;gap:16px}
+  .progress-mini{height:8px;background:rgba(255,255,255,0.05);border-radius:99px;overflow:hidden;margin-top:8px}
+  .progress-mini-fill{height:100%;background:linear-gradient(90deg,#b8902b,var(--gold-light));transition:width .8s}
+  .stat-row{display:flex;justify-content:space-between;font-size:12px;color:#aaa;margin-top:6px}
+  .stat-row b{color:#fff}
+  .goals-section{display:flex;flex-direction:column;gap:14px;margin-bottom:6px}
+  .goal-block{display:flex;flex-direction:column;gap:4px}
+  .goal-block .lbl{font-size:11px;color:#888;letter-spacing:1px;text-transform:uppercase;display:flex;justify-content:space-between}
+  .goal-block .lbl b{color:var(--gold-light);font-weight:700;font-variant-numeric:tabular-nums}
+
+  .toast{position:fixed;bottom:20px;right:20px;background:#1a1a1a;border:1px solid var(--gold);padding:12px 18px;border-radius:8px;color:#fff;font-size:13px;z-index:100;opacity:0;transform:translateY(20px);transition:all .3s}
+  .toast.show{opacity:1;transform:translateY(0)}
+  .toast.error{border-color:var(--red);color:var(--red)}
+
+  .recent-list{max-height:320px;overflow-y:auto}
+  .recent-item{padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px;display:flex;flex-direction:column;gap:2px}
+  .recent-item .nm{font-weight:500;color:#fff}
+  .recent-item .row{display:flex;justify-content:space-between;color:#888}
+  .recent-item .row .v{color:var(--gold-light);font-weight:600;font-variant-numeric:tabular-nums}
+
+  .hidden{display:none !important}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginWrap">
+  <div class="login-card">
+    <h1>🔒 Admin Access</h1>
+    <p>Enter the admin password to continue</p>
+    <input type="password" id="pw" placeholder="Password" autofocus />
+    <button onclick="doLogin()">Sign in</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="hidden">
+  <div class="topbar">
+    <h1>Event Admin Control</h1>
+    <div class="stats">
+      <span>Pledges: <b id="t-count">0</b>/<b id="t-total">130</b></span>
+      <span>Commitment: <b id="t-pledged">$0</b>/<b id="t-pgoal">$250K</b></span>
+      <span>Fundraising: <b id="t-raised">$0</b>/<b id="t-rgoal">$250K</b></span>
+      <span>Total: <b id="t-grand">$0</b>/<b id="t-tgoal">$500K</b></span>
+    </div>
+    <div class="actions">
+      <button class="btn" onclick="openDisplay()">📺 Display</button>
+      <button class="btn" onclick="editGoals()">✎ Goals</button>
+      <button class="btn danger" onclick="resetAll()">↺ Reset All</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h2>Members — Click name to rename · Enter pledge & raise · Submit</h2>
+      <div class="search-row">
+        <input id="search" placeholder="Search by name or member #..." />
+        <div class="filter-tabs">
+          <button class="ftab active" data-f="all" onclick="setFilter('all')">All</button>
+          <button class="ftab" data-f="pending" onclick="setFilter('pending')">Pending</button>
+          <button class="ftab" data-f="committed" onclick="setFilter('committed')">Committed</button>
+        </div>
+      </div>
+      <div class="members" id="members"></div>
+    </div>
+
+    <div class="sidebar">
+      <div class="card">
+        <h2>Goal Progress</h2>
+        <div class="goals-section">
+          <div class="goal-block">
+            <div class="lbl">Commitment <span><b id="s-pledged">$0</b> / <b id="s-pgoal">$250,000</b></span></div>
+            <div class="progress-mini"><div class="progress-mini-fill" id="s-pfill"></div></div>
+          </div>
+          <div class="goal-block">
+            <div class="lbl">Fundraising <span><b id="s-raised">$0</b> / <b id="s-rgoal">$250,000</b></span></div>
+            <div class="progress-mini"><div class="progress-mini-fill" id="s-rfill"></div></div>
+          </div>
+          <div class="goal-block">
+            <div class="lbl">Combined Total <span><b id="s-grand">$0</b> / <b id="s-tgoal">$500,000</b></span></div>
+            <div class="progress-mini"><div class="progress-mini-fill" id="s-tfill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Quick Pledge</h2>
+        <select id="qm" style="width:100%;padding:10px;background:#0a0a0a;border:1px solid var(--line);border-radius:7px;color:#fff;font-size:14px;margin-bottom:8px"></select>
+        <div class="input-row" style="margin-bottom:8px">
+          <div class="input-field">
+            <label>Commitment $</label>
+            <input id="qp" type="number" placeholder="0" />
+          </div>
+          <div class="input-field">
+            <label>Fundraising $</label>
+            <input id="qr" type="number" placeholder="0" />
+          </div>
+        </div>
+        <button class="btn primary" style="width:100%" onclick="quickPledge()">Submit</button>
+      </div>
+
+      <div class="card">
+        <h2>Recent Pledges</h2>
+        <div class="recent-list" id="recent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const fmt = n => '$' + Number(n||0).toLocaleString('en-US');
+const fmtK = n => {
+  n = Number(n||0);
+  if (n >= 1000000) return '$' + (n/1000000).toFixed(1).replace('.0','') + 'M';
+  if (n >= 1000) return '$' + Math.round(n/1000) + 'K';
+  return '$' + n;
+};
+const $ = id => document.getElementById(id);
+let TOKEN = localStorage.getItem('admin_token') || '';
+let STATE = null;
+let filter = 'all';
+let search = '';
+
+async function doLogin(){
+  const pw = $('pw').value;
+  try{
+    const r = await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pw})});
+    if (!r.ok){ $('loginErr').textContent = 'Invalid password'; return; }
+    const d = await r.json();
+    TOKEN = d.token;
+    localStorage.setItem('admin_token', TOKEN);
+    showApp();
+  }catch(e){ $('loginErr').textContent = 'Network error'; }
+}
+$('pw')?.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+async function showApp(){
+  const r = await fetch('/api/admin/state',{headers:{'x-admin-token':TOKEN}});
+  if (!r.ok){ TOKEN=''; localStorage.removeItem('admin_token'); return; }
+  STATE = await r.json();
+  $('loginWrap').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  render();
+  connectWS();
+}
+if (TOKEN) showApp();
+
+function connectWS(){
+  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const ws = new WebSocket(`${proto}//${location.host}/?admin=1`);
+  ws.onmessage = (ev) => {
+    try{
+      const m = JSON.parse(ev.data);
+      if (m.type === 'admin-snapshot'){
+        STATE = m;
+        render();
+      }
+    }catch(e){}
+  };
+  ws.onclose = () => setTimeout(connectWS, 2000);
+}
+
+function render(){
+  if (!STATE) return;
+  const total = STATE.totalGoal;
+  $('t-count').textContent = STATE.committedCount;
+  $('t-total').textContent = STATE.members.length;
+  $('t-pledged').textContent = fmt(STATE.totalPledged);
+  $('t-raised').textContent  = fmt(STATE.totalRaised);
+  $('t-grand').textContent   = fmt(STATE.grandTotal);
+  $('t-pgoal').textContent = fmtK(STATE.pledgeGoal);
+  $('t-rgoal').textContent = fmtK(STATE.raiseGoal);
+  $('t-tgoal').textContent = fmtK(total);
+
+  $('s-pledged').textContent = fmt(STATE.totalPledged);
+  $('s-raised').textContent = fmt(STATE.totalRaised);
+  $('s-grand').textContent = fmt(STATE.grandTotal);
+  $('s-pgoal').textContent = fmt(STATE.pledgeGoal);
+  $('s-rgoal').textContent = fmt(STATE.raiseGoal);
+  $('s-tgoal').textContent = fmt(total);
+
+  const pp = STATE.pledgeGoal > 0 ? (STATE.totalPledged/STATE.pledgeGoal)*100 : 0;
+  const rp = STATE.raiseGoal > 0 ? (STATE.totalRaised/STATE.raiseGoal)*100 : 0;
+  const tp = total > 0 ? (STATE.grandTotal/total)*100 : 0;
+  $('s-pfill').style.width = Math.min(100,pp) + '%';
+  $('s-rfill').style.width = Math.min(100,rp) + '%';
+  $('s-tfill').style.width = Math.min(100,tp) + '%';
+
+  renderMembers();
+  renderQuickSelect();
+  renderRecent();
+}
+
+function renderMembers(){
+  const q = search.toLowerCase();
+  const filtered = STATE.members.filter(m => {
+    if (filter==='committed' && !m.committed) return false;
+    if (filter==='pending' && m.committed) return false;
+    if (q && !m.name.toLowerCase().includes(q) && !String(m.id).includes(q)) return false;
+    return true;
+  });
+  $('members').innerHTML = filtered.map(m => `
+    <div class="member ${m.committed?'committed':''}" data-id="${m.id}">
+      <div class="member-head">
+        <div class="member-name" contenteditable="true"
+             onblur="renameMember(${m.id}, this.innerText)"
+             onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}">${escapeHtml(m.name)}</div>
+        <div class="member-id">#${String(m.id).padStart(3,'0')}</div>
+      </div>
+      ${m.committed ? `
+        <div class="committed-tag">
+          <div class="row"><span class="lbl">✓ Commitment</span><span class="v">${fmt(m.pledge)}</span></div>
+          <div class="row"><span class="lbl">✓ Fundraising</span><span class="v">${fmt(m.raise)}</span></div>
+          <div class="row total-row"><span class="lbl">Total</span><span class="v">${fmt((m.pledge||0)+(m.raise||0))}</span></div>
+          <button class="reset" onclick="resetMember(${m.id})">undo</button>
+        </div>
+      ` : `
+        <div class="input-row">
+          <div class="input-field">
+            <label>Commitment $</label>
+            <input type="number" placeholder="0" id="ipt-p-${m.id}"
+                   onkeydown="if(event.key==='Enter')commit(${m.id})" oninput="updateLocalTotal(${m.id})" />
+          </div>
+          <div class="input-field">
+            <label>Fundraising $</label>
+            <input type="number" placeholder="0" id="ipt-r-${m.id}"
+                   onkeydown="if(event.key==='Enter')commit(${m.id})" oninput="updateLocalTotal(${m.id})" />
+          </div>
+        </div>
+        <div class="submit-row">
+          <span class="total">Total: <b id="ipt-t-${m.id}">$0</b></span>
+          <button onclick="commit(${m.id})">Submit</button>
+        </div>
+      `}
+    </div>
+  `).join('');
+}
+
+function updateLocalTotal(id){
+  const p = parseFloat($(`ipt-p-${id}`).value) || 0;
+  const r = parseFloat($(`ipt-r-${id}`).value) || 0;
+  const t = $(`ipt-t-${id}`);
+  if (t) t.textContent = fmt(p + r);
+}
+
+function renderQuickSelect(){
+  const sel = $('qm');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— Select member —</option>' +
+    STATE.members.filter(m=>!m.committed)
+      .map(m=>`<option value="${m.id}">#${String(m.id).padStart(3,'0')} — ${escapeHtml(m.name)}</option>`).join('');
+  if (cur) sel.value = cur;
+}
+
+function renderRecent(){
+  const recent = STATE.members.filter(m=>m.committed)
+    .sort((a,b)=>b.committedAt - a.committedAt).slice(0,15);
+  if (recent.length===0){
+    $('recent').innerHTML = '<div style="color:#666;font-size:13px;padding:8px 0">No pledges yet</div>';
+    return;
+  }
+  $('recent').innerHTML = recent.map(m=>`
+    <div class="recent-item">
+      <div class="nm">${escapeHtml(m.name)}</div>
+      <div class="row"><span>P: ${fmt(m.pledge)}</span><span>R: ${fmt(m.raise)}</span><span class="v">${fmt((m.pledge||0)+(m.raise||0))}</span></div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+async function api(path, body){
+  const r = await fetch(path, {
+    method:'POST',
+    headers:{'Content-Type':'application/json','x-admin-token':TOKEN},
+    body: JSON.stringify(body||{})
+  });
+  if (!r.ok){
+    const e = await r.json().catch(()=>({error:'Error'}));
+    toast(e.error || 'Error', true);
+    throw new Error(e.error);
+  }
+  return r.json();
+}
+
+async function commit(id){
+  const p = parseFloat($(`ipt-p-${id}`).value) || 0;
+  const r = parseFloat($(`ipt-r-${id}`).value) || 0;
+  if (p === 0 && r === 0){ toast('Enter at least one amount', true); return; }
+  if (p < 0 || r < 0){ toast('Amounts must be positive', true); return; }
+  try{
+    await api('/api/admin/commit', { id, pledge: p, raise: r });
+    toast('Pledge recorded ✓');
+  }catch(e){}
+}
+
+async function quickPledge(){
+  const id = parseInt($('qm').value);
+  const p = parseFloat($('qp').value) || 0;
+  const r = parseFloat($('qr').value) || 0;
+  if (!id){ toast('Pick a member', true); return; }
+  if (p === 0 && r === 0){ toast('Enter at least one amount', true); return; }
+  try{
+    await api('/api/admin/commit', { id, pledge: p, raise: r });
+    $('qp').value = '';
+    $('qr').value = '';
+    $('qm').value = '';
+    toast('Pledge recorded ✓');
+  }catch(e){}
+}
+
+async function resetMember(id){
+  if (!confirm('Undo this pledge?')) return;
+  await api('/api/admin/reset-member', {id});
+  toast('Pledge removed');
+}
+
+async function renameMember(id, name){
+  name = (name||'').trim();
+  if (!name) return;
+  await api('/api/admin/rename', {id, name});
+}
+
+async function editGoals(){
+  const pg = prompt('Commitment goal ($):', STATE.pledgeGoal);
+  if (pg === null) return;
+  const rg = prompt('Fundraising goal ($):', STATE.raiseGoal);
+  if (rg === null) return;
+  const pgn = parseFloat(pg);
+  const rgn = parseFloat(rg);
+  if (!isFinite(pgn) || pgn < 0){ toast('Invalid commitment goal', true); return; }
+  if (!isFinite(rgn) || rgn < 0){ toast('Invalid fundraising goal', true); return; }
+  await api('/api/admin/goals', { pledgeGoal: pgn, raiseGoal: rgn });
+  toast('Goals updated');
+}
+
+async function resetAll(){
+  if (!confirm('Reset ALL pledges? This cannot be undone.')) return;
+  if (!confirm('Are you sure? Every pledge will be cleared.')) return;
+  await api('/api/admin/reset-all', {});
+  toast('All pledges cleared');
+}
+
+function setFilter(f){
+  filter = f;
+  document.querySelectorAll('.ftab').forEach(b=>b.classList.toggle('active', b.dataset.f===f));
+  renderMembers();
+}
+$('search').addEventListener('input', e => { search = e.target.value; renderMembers(); });
+
+function openDisplay(){ window.open('/', '_blank'); }
+
+let toastTimer;
+function toast(msg, err){
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', !!err);
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2400);
+}
+</script>
+</body>
+</html>

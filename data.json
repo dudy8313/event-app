@@ -1,0 +1,1155 @@
+{
+  "currency": "USD",
+  "members": [
+    {
+      "id": 1,
+      "name": "Avrohom Atlas",
+      "committed": true,
+      "committedAt": 1781214024719,
+      "pledge": 200,
+      "raise": 200
+    },
+    {
+      "id": 2,
+      "name": "Yosef Bamberger",
+      "committed": true,
+      "committedAt": 1781214028360,
+      "pledge": 200,
+      "raise": 200
+    },
+    {
+      "id": 3,
+      "name": "Moshe Berger",
+      "committed": true,
+      "committedAt": 1781214034085,
+      "pledge": 200,
+      "raise": 200
+    },
+    {
+      "id": 4,
+      "name": "Azriel Berger",
+      "committed": true,
+      "committedAt": 1781214038456,
+      "pledge": 200,
+      "raise": 200
+    },
+    {
+      "id": 5,
+      "name": "Moshe Bernstein",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 6,
+      "name": "Yitzchok I. Bernstein",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 7,
+      "name": "Shimon Bick",
+      "committed": true,
+      "committedAt": 1781214048755,
+      "pledge": 200,
+      "raise": 200
+    },
+    {
+      "id": 8,
+      "name": "Shmuel Binder",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 9,
+      "name": "Moshe Birnbaum",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 10,
+      "name": "Shimon Biron",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 11,
+      "name": "Chaim Akiva Boim",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 12,
+      "name": "Eliezer Yehuda Brodsky",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 13,
+      "name": "Mordechai Zalman Bromberg",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 14,
+      "name": "Pinchas Brooks",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 15,
+      "name": "Shmuel Mayer Brotsky",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 16,
+      "name": "Mendel Broyde",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 17,
+      "name": "Avrohom Burstyn",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 18,
+      "name": "Avrohom Cohen",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 19,
+      "name": "Yisroel Dickstein",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 20,
+      "name": "Eliyahu Dickstein",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 21,
+      "name": "Nochum Edelson",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 22,
+      "name": "Nochum Ehrlich",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 23,
+      "name": "Henoch Feinzeig",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 24,
+      "name": "Aron Meir Felder",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 25,
+      "name": "Shlomo Aharon Fenster",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 26,
+      "name": "Dovid Ferder",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 27,
+      "name": "Eliyahu Frankel",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 28,
+      "name": "Shimon Frost",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 29,
+      "name": "Efraim Fuchs",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 30,
+      "name": "Dovid Ganz",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 31,
+      "name": "Ari Gelb",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 32,
+      "name": "Boruch Gluck",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 33,
+      "name": "Dovi Gobioff",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 34,
+      "name": "Moshe Goldberg",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 35,
+      "name": "Yechezkel Shraga Goldberg",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 36,
+      "name": "Menachem M Goldberg",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 37,
+      "name": "Simcha Zissel Goldberger",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 38,
+      "name": "Pinchas Goldman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 39,
+      "name": "Uriel Goldszmid",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 40,
+      "name": "Eliezer Gordon",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 41,
+      "name": "Yitzchak Issac Gottesman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 42,
+      "name": "Shimon Goykadosh",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 43,
+      "name": "Yehuda Greer",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 44,
+      "name": "Chaim Eliyahu Gross",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 45,
+      "name": "Avrohom Hillel Gross",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 46,
+      "name": "Yehuda Yehoshua Grunwald",
+      "committed": true,
+      "committedAt": 1781214015522,
+      "pledge": 200,
+      "raise": 200
+    },
+    {
+      "id": 47,
+      "name": "Yaakov Gruskin",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 48,
+      "name": "Yisroel Gurwitz",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 49,
+      "name": "Noshe Gutman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 50,
+      "name": "Chaim Zev Harari",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 51,
+      "name": "Pinchas Helberg",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 52,
+      "name": "Kalman Hess",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 53,
+      "name": "Moshe Hettleman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 54,
+      "name": "Yechezkel Hilman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 55,
+      "name": "Eli Hirsch",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 56,
+      "name": "Menachem Hirsch",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 57,
+      "name": "Yaakov Kahan",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 58,
+      "name": "Yitzchok Zev Kanarek",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 59,
+      "name": "Elya Nota Katz",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 60,
+      "name": "Mordechai Kaye",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 61,
+      "name": "Zalman Kelemer",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 62,
+      "name": "Sholom Kesselman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 63,
+      "name": "Binyomin Kilberg",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 64,
+      "name": "Shmelke Klein",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 65,
+      "name": "Tzvi Yehuda Kleinman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 66,
+      "name": "Dovid Klotzman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 67,
+      "name": "Shimon Kohn",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 68,
+      "name": "Bentzion Kokis",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 69,
+      "name": "Eli Landau",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 70,
+      "name": "Tzvi Aryeh Lazar",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 71,
+      "name": "Yossi Lefkowitz",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 72,
+      "name": "Dovid Lesser",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 73,
+      "name": "Suchi Lesser",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 74,
+      "name": "Yehoshua Levenberg",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 75,
+      "name": "Shmuel Levy",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 76,
+      "name": "Pinchas Doniel Lieberman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 77,
+      "name": "Yosef Lindner",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 78,
+      "name": "Aharon Shmuel Liss",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 79,
+      "name": "Chanoch Litt",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 80,
+      "name": "Yitzchak Loewy",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 81,
+      "name": "Eliyahu Loewy",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 82,
+      "name": "Hillel Londinsky",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 83,
+      "name": "Yaakov Lyons",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 84,
+      "name": "Shmuel Malov",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 85,
+      "name": "Meir Mann",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 86,
+      "name": "Miller",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 87,
+      "name": "Yaakov Mizrachi",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 88,
+      "name": "Eliyohu Munk",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 89,
+      "name": "Meir Muskat",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 90,
+      "name": "Yehoshua Nadoff",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 91,
+      "name": "Shimon Newirth",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 92,
+      "name": "Zev Padawer",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 93,
+      "name": "Yisroel Meir Pearl",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 94,
+      "name": "Nesanel Pfieffer",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 95,
+      "name": "Yitzchok Pollack",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 96,
+      "name": "Shlomo Ponack",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 97,
+      "name": "Avrohom Posen",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 98,
+      "name": "Binyomin Rabinowitz",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 99,
+      "name": "Sholom Rechnitz",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 100,
+      "name": "Yosef Rennert",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 101,
+      "name": "Yisroel L Rosenman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 102,
+      "name": "Nosson Noteh Rotkin",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 103,
+      "name": "Yehoshua Rubin",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 104,
+      "name": "Chaim Eli Rubnitz",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 105,
+      "name": "Moshe Yosef Ruvel",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 106,
+      "name": "Aaron Sasson",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 107,
+      "name": "Yitzchok Savir",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 108,
+      "name": "Ephraim Schlusselberg",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 109,
+      "name": "Shlomo Schreibman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 110,
+      "name": "Shlomie Schubert",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 111,
+      "name": "Yitzchok Schuster",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 112,
+      "name": "Binyomin Seigel",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 113,
+      "name": "Ahron Shain",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 114,
+      "name": "Chaim Yisroel Shain",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 115,
+      "name": "Menachem Shain",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 116,
+      "name": "Yehuda Aryeh Shain",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 117,
+      "name": "Gamliel Shlomowitz",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 118,
+      "name": "Betzalel Sofer",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 119,
+      "name": "Chaim Shlomie Sofer",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 120,
+      "name": "Benzion Stefanski",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 121,
+      "name": "Chaim Stern",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 122,
+      "name": "Akiva Sunness",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 123,
+      "name": "Meir Simcha Taplin",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 124,
+      "name": "Avrohom Yaakov Teitelbaum",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 125,
+      "name": "Yehoshua Waxman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 126,
+      "name": "Shimon Weisberger",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 127,
+      "name": "Shragi Weiss",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 128,
+      "name": "Raphael Weiss",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 129,
+      "name": "Kalmen Weiss",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 130,
+      "name": "Sholom Weitman",
+      "committed": false,
+      "committedAt": null,
+      "pledge": 0,
+      "raise": 0
+    },
+    {
+      "id": 131,
+      "name": "Yechezkel Weitman",
+      "committed": false,
+      "pledge": 0,
+      "raise": 0,
+      "committedAt": null
+    },
+    {
+      "id": 132,
+      "name": "Mendel Yankelowitz",
+      "committed": false,
+      "pledge": 0,
+      "raise": 0,
+      "committedAt": null
+    },
+    {
+      "id": 133,
+      "name": "Moshe Yaroslawitz",
+      "committed": false,
+      "pledge": 0,
+      "raise": 0,
+      "committedAt": null
+    },
+    {
+      "id": 134,
+      "name": "Binyomin Yoffe",
+      "committed": false,
+      "pledge": 0,
+      "raise": 0,
+      "committedAt": null
+    },
+    {
+      "id": 135,
+      "name": "Dovid Zadok",
+      "committed": false,
+      "pledge": 0,
+      "raise": 0,
+      "committedAt": null
+    },
+    {
+      "id": 136,
+      "name": "Yaakov Zamel",
+      "committed": false,
+      "pledge": 0,
+      "raise": 0,
+      "committedAt": null
+    },
+    {
+      "id": 137,
+      "name": "Shimon Leib Zarecki",
+      "committed": false,
+      "pledge": 0,
+      "raise": 0,
+      "committedAt": null
+    },
+    {
+      "id": 138,
+      "name": "Nochum Shimon Zwiebel",
+      "committed": false,
+      "pledge": 0,
+      "raise": 0,
+      "committedAt": null
+    }
+  ],
+  "commitments": [
+    {
+      "id": 46,
+      "name": "Yehuda Yehoshua Grunwald",
+      "pledge": 200,
+      "raise": 200,
+      "committedAt": 1781214015522
+    },
+    {
+      "id": 1,
+      "name": "Avrohom Atlas",
+      "pledge": 200,
+      "raise": 200,
+      "committedAt": 1781214024719
+    },
+    {
+      "id": 2,
+      "name": "Yosef Bamberger",
+      "pledge": 200,
+      "raise": 200,
+      "committedAt": 1781214028360
+    },
+    {
+      "id": 3,
+      "name": "Moshe Berger",
+      "pledge": 200,
+      "raise": 200,
+      "committedAt": 1781214034085
+    },
+    {
+      "id": 4,
+      "name": "Azriel Berger",
+      "pledge": 200,
+      "raise": 200,
+      "committedAt": 1781214038456
+    },
+    {
+      "id": 7,
+      "name": "Shimon Bick",
+      "pledge": 200,
+      "raise": 200,
+      "committedAt": 1781214048755
+    }
+  ],
+  "pledgeGoal": 2000000,
+  "raiseGoal": 500000
+}

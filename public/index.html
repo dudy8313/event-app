@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Event Commitment Display</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#d4af37;
+    --gold-light:#f4d77a;
+    --gold-deep:#b8902b;
+    --line:rgba(212,175,55,0.25);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Inter',sans-serif;
+    background:#000;
+    color:#fff;overflow:hidden;
+  }
+  body::before{display:none}
+
+  .center-bg{
+    position:absolute;
+    left: calc(420px + 22px + 24px);
+    right: calc(420px + 22px + 24px);
+    top:24px;bottom:24px;
+    border-radius:24px;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+    border:1px solid var(--line);
+  }
+  .center-bg::before{
+    content:'';position:absolute;inset:0;
+    background-image:url('beis-hamedrash.jpg');
+    background-size:cover;
+    background-position:center;
+    opacity:0.55;
+    filter:saturate(0.85) brightness(0.95);
+  }
+  .center-bg::after{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.45) 100%),
+      linear-gradient(180deg, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.10) 40%, rgba(0,0,0,0.10) 60%, rgba(0,0,0,0.35) 100%);
+  }
+
+  .stage{
+    position:relative;z-index:1;height:100vh;
+    display:grid;
+    grid-template-columns: 420px 1fr 420px;
+    gap:22px;padding:24px;
+  }
+  .stage > .center{position:relative;z-index:2}
+
+  /* ====== SIDE COLUMNS ====== */
+  .side-col{
+    border:1px solid var(--line);
+    border-radius:20px;
+    background:#000;
+    display:flex;flex-direction:column;overflow:hidden;
+    position:relative;
+  }
+  .side-col::before{
+    content:'';position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .side-col-header{
+    padding:20px 22px 14px;
+    border-bottom:1px solid var(--line);
+    text-align:center;
+  }
+  .side-col-header h3{font-family:'Cormorant Garamond';font-size:26px;font-weight:600;color:#fff}
+  .side-col-header .count{font-size:12px;color:#888;margin-top:4px;letter-spacing:1px}
+  .side-col-header .count b{color:var(--gold-light);font-weight:600}
+
+  .marquee{
+    flex:1;overflow:hidden;position:relative;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0%, #000 8%, #000 92%, transparent 100%);
+            mask-image:linear-gradient(180deg,transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+  .marquee-track{
+    position:absolute; left:0; right:0; top:0;
+    display:flex; flex-direction:column;
+    padding:14px 16px;
+    will-change:transform;
+  }
+  .marquee-empty{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:24px;
+  }
+  .marquee-empty span{color:#555;font-size:13px;letter-spacing:3px;text-transform:uppercase;font-weight:500}
+
+  .name-item{
+    padding:16px 20px; margin-bottom:11px;
+    border:1px solid rgba(212,175,55,0.4);
+    border-radius:12px;
+    background:#000;
+    box-shadow:0 0 18px rgba(212,175,55,0.15);
+    display:flex;flex-direction:column;
+    gap:7px;
+  }
+  .name-item .name{
+    color:#e8b923;font-weight:700;letter-spacing:.3px;font-size:20px;
+    overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    border-bottom:1px solid rgba(212,175,55,0.3);padding-bottom:7px;margin-bottom:3px;
+    text-shadow:0 0 1px rgba(212,175,55,0.4);
+  }
+  .name-item .row{display:flex;justify-content:space-between;align-items:center;font-size:14px}
+  .name-item .row .lbl{color:#d4af37;letter-spacing:1px;text-transform:uppercase;font-size:11px;font-weight:700}
+  .name-item .row .v{color:#e8b923;font-weight:700;font-variant-numeric:tabular-nums;font-size:15px;text-shadow:0 0 1px rgba(212,175,55,0.4)}
+
+  /* ====== CENTER ====== */
+  .center{
+    display:flex;flex-direction:column;justify-content:flex-start;align-items:center;
+    min-width:0;
+    padding:24px 2.5%;
+    position:relative;
+  }
+
+  /* Progress circles row */
+  .circles-row{
+    display:flex;gap:5%;justify-content:center;align-items:flex-start;
+    margin-top:30px;margin-bottom:30px;
+    width:100%;
+  }
+  .circle-block{
+    display:flex;flex-direction:column;align-items:center;gap:24px;
+    flex:1;max-width:46%;
+  }
+  .progress-circle{
+    position:relative;
+    width:min(440px, 100%);aspect-ratio:1;
+    text-shadow:0 2px 14px rgba(0,0,0,0.85);
+  }
+  .progress-circle svg{
+    width:100%;height:100%;
+    transform:rotate(-90deg);
+    filter:drop-shadow(0 0 12px rgba(212,175,55,0.4));
+  }
+  .pc-bg{
+    fill:none;stroke:rgba(0,0,0,0.6);stroke-width:16;
+  }
+  .pc-fill{
+    fill:none;stroke:url(#goldGrad);stroke-width:16;stroke-linecap:round;
+    transition:stroke-dashoffset 1.2s cubic-bezier(.22,1,.36,1);
+  }
+  .pc-content{
+    position:absolute;inset:0;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+  }
+  .pc-amount{
+    font-family:'Cormorant Garamond';font-weight:700;
+    font-size:clamp(80px, 8.5vw, 140px);line-height:1;color:var(--gold-light);
+    text-shadow:
+      0 0 6px #000,
+      0 0 14px rgba(0,0,0,0.98),
+      0 4px 18px rgba(0,0,0,0.9),
+      -1px -1px 0 rgba(0,0,0,0.6),
+      1px 1px 0 rgba(0,0,0,0.6);
+  }
+  .pc-label{
+    font-size:clamp(20px, 1.8vw, 30px);letter-spacing:8px;color:#fff;text-transform:uppercase;
+    margin-top:24px;font-weight:800;
+    text-shadow:0 0 6px #000, 0 2px 12px rgba(0,0,0,0.98);
+  }
+  .pc-pct{
+    font-size:clamp(22px, 2vw, 34px);color:var(--gold-light);margin-top:14px;font-weight:700;
+    text-shadow:0 0 6px #000, 0 2px 10px rgba(0,0,0,0.98);
+  }
+  .pc-goal{
+    font-size:clamp(22px, 2vw, 34px);letter-spacing:6px;color:#fff;text-transform:uppercase;
+    text-align:center;font-weight:700;
+    text-shadow:0 0 6px #000, 0 2px 14px rgba(0,0,0,0.98), 0 0 24px rgba(0,0,0,0.9);
+  }
+  .pc-goal b{color:var(--gold-light);font-weight:700;font-size:clamp(28px, 2.4vw, 44px);letter-spacing:1px;font-variant-numeric:tabular-nums}
+
+  /* Total line */
+  .total-line{
+    text-align:center;margin-bottom:18px;
+    text-shadow:0 2px 14px rgba(0,0,0,0.85);
+  }
+  .total-line .amt{
+    font-family:'Cormorant Garamond';font-weight:700;
+    font-size:54px;line-height:1;color:#fff;
+    text-shadow:0 0 30px rgba(0,0,0,0.95), 0 4px 20px rgba(0,0,0,0.85);
+    transition:transform .4s ease;
+  }
+  .total-line .amt.bump{transform:scale(1.06)}
+  .total-line .of{font-size:13px;color:#ddd;letter-spacing:2px;margin-top:6px;text-shadow:0 2px 10px rgba(0,0,0,0.9)}
+  .total-line .of b{color:var(--gold-light);font-weight:600}
+
+  /* Stats line */
+  .stats-mini{display:flex;gap:60px;margin-top:14px;justify-content:center}
+  .stat-mini{text-align:center;text-shadow:0 0 6px #000, 0 2px 10px rgba(0,0,0,0.95)}
+  .stat-mini .num{font-size:34px;font-weight:700;color:var(--gold-light)}
+  .stat-mini .lbl{font-size:13px;letter-spacing:3px;color:#fff;text-transform:uppercase;margin-top:4px;font-weight:600}
+
+  /* Popup zone — only the BOTTOM section of the center */
+  .popup-zone{
+    position:relative;
+    flex:1;
+    width:100%;
+    min-height:200px;
+    border-radius:18px;
+    overflow:visible;
+    display:flex;align-items:center;justify-content:center;
+    padding:14px;
+    transition:background .4s;
+    margin-top:10px;
+    background:transparent;
+  }
+  .popup-zone.active{
+    background:radial-gradient(ellipse at center, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.95) 100%);
+  }
+  .popup-idle{display:none}
+
+  .popup-content{
+    text-align:center;
+    transform:scale(.85);opacity:0;
+    transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .4s;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    pointer-events:none;
+    width:100%;
+    max-width:100%;
+    position:absolute;
+    inset:8px;
+    overflow:hidden;
+  }
+  .popup-zone.active .popup-content{transform:scale(1);opacity:1}
+
+  .popup-eyebrow{font-size:10px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;font-weight:600}
+  .popup-name{
+    font-family:'Cormorant Garamond';font-weight:600;
+    font-size:clamp(22px,2.6vw,38px);line-height:1.05;
+    background:linear-gradient(135deg,#fff 0%,var(--gold-light) 50%,var(--gold) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 60px rgba(212,175,55,0.4);
+    margin-bottom:8px;padding:0 14px;
+    word-break:break-word;
+    max-width:100%;
+  }
+  .popup-divider{
+    width:120px;height:1px;margin:0 auto 8px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .popup-breakdown{display:flex;gap:36px;justify-content:center;flex-wrap:wrap;width:100%;align-items:flex-start}
+  .popup-stat{text-align:center;min-width:0}
+  .popup-stat .lbl{font-size:9px;letter-spacing:2.5px;color:#fff;text-transform:uppercase;margin-bottom:4px;font-weight:700}
+  .popup-stat .v{
+    font-family:'Cormorant Garamond';font-weight:700;
+    font-size:clamp(24px,2.8vw,42px);line-height:1.1;
+    color:var(--gold-light);
+    text-shadow:0 0 20px rgba(212,175,55,0.4);
+    font-variant-numeric:tabular-nums;
+    padding-bottom:4px;
+  }
+  .popup-total{
+    margin-top:8px;padding-top:14px;border-top:1px solid rgba(212,175,55,0.3);
+    text-align:center;display:inline-block;padding-left:30px;padding-right:30px;
+  }
+  .popup-total .lbl{font-size:10px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:6px;font-weight:700}
+  .popup-total .v{
+    font-family:'Cormorant Garamond';font-weight:700;
+    font-size:clamp(46px,5.5vw,82px);line-height:1;
+    background:linear-gradient(135deg,var(--gold-light) 0%,var(--gold) 50%,var(--gold-deep) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 80px rgba(212,175,55,0.5);
+  }
+
+  .sparkle{
+    position:absolute;width:6px;height:6px;border-radius:50%;
+    background:var(--gold);box-shadow:0 0 12px var(--gold-light);
+    opacity:0;pointer-events:none;
+  }
+
+  .conn-dot{
+    position:fixed;top:14px;right:14px;width:9px;height:9px;border-radius:50%;
+    background:#888;z-index:100;transition:background .3s;
+  }
+  .conn-dot.ok{background:#4ade80;box-shadow:0 0 8px #4ade80}
+  .conn-dot.bad{background:#f87171}
+
+  .queue-badge{
+    position:fixed;bottom:14px;right:14px;
+    padding:6px 12px;border-radius:99px;
+    background:rgba(212,175,55,0.15);border:1px solid var(--gold);
+    color:var(--gold-light);font-size:12px;letter-spacing:1px;
+    z-index:100;display:none;
+  }
+  .queue-badge.show{display:block}
+</style>
+</head>
+<body>
+
+<!-- shared SVG defs -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4d77a"/>
+      <stop offset="50%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#b8902b"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div class="conn-dot bad" id="connDot" title="connection"></div>
+<div class="queue-badge" id="queueBadge">+<span id="queueCount">0</span> incoming</div>
+
+<div class="center-bg"></div>
+
+<div class="stage">
+  <!-- ===== LEFT COLUMN ===== -->
+  <aside class="side-col">
+    <div class="marquee" id="marqueeLeft">
+      <div class="marquee-track" id="trackLeft"></div>
+      <div class="marquee-empty" id="emptyLeft"><span>Awaiting first pledge</span></div>
+    </div>
+  </aside>
+
+  <!-- ===== CENTER ===== -->
+  <section class="center">
+
+    <!-- Two progress circles -->
+    <div class="circles-row">
+      <div class="circle-block">
+        <div class="progress-circle">
+          <svg viewBox="0 0 340 340">
+            <circle class="pc-bg"   cx="170" cy="170" r="153"/>
+            <circle class="pc-fill" cx="170" cy="170" r="153" id="circleC"
+                    stroke-dasharray="961" stroke-dashoffset="961"/>
+          </svg>
+          <div class="pc-content">
+            <div class="pc-amount" id="commitAmt">$0</div>
+            <div class="pc-label">Commitments</div>
+            <div class="pc-pct" id="commitPct">0%</div>
+          </div>
+        </div>
+        <div class="pc-goal">Goal: <b id="commitGoal">$250,000</b></div>
+      </div>
+      <div class="circle-block">
+        <div class="progress-circle">
+          <svg viewBox="0 0 340 340">
+            <circle class="pc-bg"   cx="170" cy="170" r="153"/>
+            <circle class="pc-fill" cx="170" cy="170" r="153" id="circleR"
+                    stroke-dasharray="961" stroke-dashoffset="961"/>
+          </svg>
+          <div class="pc-content">
+            <div class="pc-amount" id="raiseAmt">$0</div>
+            <div class="pc-label">Fundraising</div>
+            <div class="pc-pct" id="raisePct">0%</div>
+          </div>
+        </div>
+        <div class="pc-goal">Goal: <b id="raiseGoalText">$250,000</b></div>
+      </div>
+    </div>
+
+    <div class="stats-mini">
+      <div class="stat-mini"><div class="num" id="stat-count">0</div><div class="lbl">Pledges</div></div>
+      <div class="stat-mini"><div class="num" id="stat-total">130</div><div class="lbl">Members</div></div>
+    </div>
+
+    <!-- Popup zone -->
+    <div class="popup-zone" id="popupZone">
+      <div class="popup-idle" id="popupIdle"></div>
+      <div class="popup-content">
+        <div class="popup-eyebrow">A New Commitment</div>
+        <div class="popup-name" id="popup-name">—</div>
+        <div class="popup-divider"></div>
+        <div class="popup-breakdown">
+          <div class="popup-stat">
+            <div class="lbl">Commitment</div>
+            <div class="v" id="popup-pledge">$0</div>
+          </div>
+          <div class="popup-stat">
+            <div class="lbl">Fundraising</div>
+            <div class="v" id="popup-raise">$0</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RIGHT COLUMN ===== -->
+  <aside class="side-col">
+    <div class="marquee" id="marqueeRight">
+      <div class="marquee-track" id="trackRight"></div>
+      <div class="marquee-empty" id="emptyRight"><span>Awaiting first pledge</span></div>
+    </div>
+  </aside>
+</div>
+
+<script>
+const POPUP_DURATION = 5000;
+const POPUP_GAP = 350;
+const SCROLL_SPEED = 30;
+const CIRC = 2 * Math.PI * 153; // circumference for r=153
+
+const fmt = (n) => '$' + Number(n||0).toLocaleString('en-US');
+const $ = (id) => document.getElementById(id);
+
+let pledgeGoal = 250000, raiseGoal = 250000;
+let _cachedCommitments = [];
+let _totalMembers = 130;
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function setCircle(el, pct){
+  const offset = CIRC - (Math.min(100, Math.max(0, pct)) / 100) * CIRC;
+  el.setAttribute('stroke-dasharray', CIRC.toFixed(2));
+  el.setAttribute('stroke-dashoffset', offset.toFixed(2));
+}
+
+function renderState(s){
+  pledgeGoal = s.pledgeGoal ?? pledgeGoal;
+  raiseGoal  = s.raiseGoal ?? raiseGoal;
+  if (s.commitments) _cachedCommitments = s.commitments;
+  if (s.totalMembers) _totalMembers = s.totalMembers;
+
+  const tp = s.totalPledged ?? 0;
+  const tr = s.totalRaised ?? 0;
+  const grand = s.grandTotal ?? (tp + tr);
+  const cc = s.committedCount ?? _cachedCommitments.length;
+
+  $('commitAmt').textContent = fmt(tp);
+  $('raiseAmt').textContent  = fmt(tr);
+  const cp = pledgeGoal > 0 ? (tp / pledgeGoal) * 100 : 0;
+  const rp = raiseGoal  > 0 ? (tr / raiseGoal)  * 100 : 0;
+  $('commitPct').textContent = cp.toFixed(1) + '%';
+  $('raisePct').textContent  = rp.toFixed(1) + '%';
+  setCircle($('circleC'), cp);
+  setCircle($('circleR'), rp);
+
+  $('commitGoal').textContent = fmt(pledgeGoal);
+  $('raiseGoalText').textContent = fmt(raiseGoal);
+
+  $('stat-count').textContent = cc;
+  $('stat-total').textContent = _totalMembers;
+
+  renderColumns();
+}
+
+function renderColumns(){
+  const sorted = [..._cachedCommitments].sort((a,b)=>a.committedAt - b.committedAt);
+  const left = [], right = [];
+  sorted.forEach((c,i) => (i % 2 === 0 ? left : right).push(c));
+
+  fillTrack($('trackLeft'),  left,  $('marqueeLeft'),  $('emptyLeft'));
+  fillTrack($('trackRight'), right, $('marqueeRight'), $('emptyRight'));
+}
+
+function commitHTML(c){
+  return `<div class="name-item">
+            <div class="name">${escapeHtml(c.name)}</div>
+            <div class="row"><span class="lbl">Pledge</span><span class="v">${fmt(c.pledge)}</span></div>
+            <div class="row"><span class="lbl">Raise</span> <span class="v">${fmt(c.raise)}</span></div>
+          </div>`;
+}
+
+function fillTrack(track, items, viewport, emptyEl){
+  if (!items.length){
+    track.innerHTML = '';
+    track.style.transform = 'translateY(0)';
+    emptyEl.style.display = 'flex';
+    cancelMarquee(track);
+    return;
+  }
+  emptyEl.style.display = 'none';
+  const html = items.map(commitHTML).join('');
+  track.innerHTML = html;
+  track.style.transform = 'translateY(0)';
+  cancelMarquee(track);
+  requestAnimationFrame(() => {
+    const viewH = viewport.clientHeight;
+    if (track.scrollHeight > viewH){
+      track.innerHTML = html + html;
+      startMarquee(track, viewport);
+    }
+  });
+}
+
+const marqueeStates = new WeakMap();
+function cancelMarquee(track){
+  const prior = marqueeStates.get(track);
+  if (prior && prior.raf) cancelAnimationFrame(prior.raf);
+  marqueeStates.delete(track);
+}
+function startMarquee(track, viewport){
+  cancelMarquee(track);
+  requestAnimationFrame(() => {
+    const halfHeight = track.scrollHeight / 2;
+    let pos = 0;
+    let last = performance.now();
+    const tick = (now) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      pos -= SCROLL_SPEED * dt;
+      if (pos <= -halfHeight) pos += halfHeight;
+      track.style.transform = `translateY(${pos}px)`;
+      const raf = requestAnimationFrame(tick);
+      marqueeStates.set(track, {raf});
+    };
+    const raf = requestAnimationFrame(tick);
+    marqueeStates.set(track, {raf});
+  });
+}
+
+// ===== Popup queue =====
+const popupQueue = [];
+let popupRunning = false;
+
+function enqueuePopup(commitment){
+  popupQueue.push(commitment);
+  updateQueueBadge();
+  if (!popupRunning) runQueue();
+}
+function updateQueueBadge(){
+  const b = $('queueBadge');
+  if (popupQueue.length > 0){
+    $('queueCount').textContent = popupQueue.length;
+    b.classList.add('show');
+  } else b.classList.remove('show');
+}
+async function runQueue(){
+  popupRunning = true;
+  while (popupQueue.length > 0){
+    const c = popupQueue.shift();
+    updateQueueBadge();
+    await showPopupOnce(c);
+    await wait(POPUP_GAP);
+  }
+  popupRunning = false;
+}
+function wait(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+function showPopupOnce(commitment){
+  return new Promise((resolve) => {
+    $('popup-name').textContent = commitment.name;
+    $('popup-pledge').textContent = fmt(commitment.pledge);
+    $('popup-raise').textContent = fmt(commitment.raise);
+    const zone = $('popupZone');
+    zone.classList.add('active');
+    spawnSparkles(zone);
+
+    setTimeout(() => {
+      zone.classList.remove('active');
+      setTimeout(resolve, 450);
+    }, POPUP_DURATION);
+  });
+}
+
+function spawnSparkles(parent){
+  for (let i=0;i<22;i++){
+    const s = document.createElement('div');
+    s.className='sparkle';
+    s.style.left = (Math.random()*100) + '%';
+    s.style.top = (Math.random()*100) + '%';
+    parent.appendChild(s);
+    s.animate(
+      [
+        {opacity:0, transform:'scale(0) translateY(0)'},
+        {opacity:1, transform:'scale(1.4) translateY(-10px)', offset:.4},
+        {opacity:0, transform:'scale(0.5) translateY(-40px)'}
+      ],
+      {duration:1800 + Math.random()*1500, easing:'ease-out'}
+    );
+    setTimeout(()=>s.remove(), 3500);
+  }
+}
+
+// ===== WebSocket =====
+let ws;
+function connect(){
+  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  ws = new WebSocket(`${proto}//${location.host}/?display=1`);
+  ws.onopen = () => $('connDot').className = 'conn-dot ok';
+  ws.onclose = () => {
+    $('connDot').className = 'conn-dot bad';
+    setTimeout(connect, 2000);
+  };
+  ws.onerror = () => ws.close();
+  ws.onmessage = (ev) => {
+    try{
+      const msg = JSON.parse(ev.data);
+      if (msg.type === 'snapshot'){
+        renderState(msg);
+      } else if (msg.type === 'new-commitment'){
+        enqueuePopup(msg.commitment);
+        _cachedCommitments = _cachedCommitments.filter(c=>c.id !== msg.commitment.id);
+        _cachedCommitments.push(msg.commitment);
+        renderState({
+          pledgeGoal: msg.pledgeGoal,
+          raiseGoal: msg.raiseGoal,
+          totalPledged: msg.totalPledged,
+          totalRaised: msg.totalRaised,
+          grandTotal: msg.grandTotal,
+          committedCount: msg.committedCount,
+          commitments: _cachedCommitments,
+        });
+      }
+    }catch(e){console.error(e)}
+  };
+}
+
+async function init(){
+  try{
+    const s = await fetch('/api/state').then(r=>r.json());
+    renderState(s);
+  }catch(e){console.error(e)}
+}
+
+init();
+connect();
+
+
+
+
+
+
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(renderColumns, 250);
+});
+</script>
+</body>
+</html>
